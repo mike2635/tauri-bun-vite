@@ -12,8 +12,38 @@ tauri-build = { version = "1.5.3", features = [] }
 
 [dependencies]
 tauri = { version = "1.7.1", features = ["shell-open", "system-tray"] }
-serde = { version = "1.0.204", features = ["derive"] }
-serde_json = "1.0.121"
+
+# 序列化和反序列化依赖
+# serde 定义了数据序列化和反序列化的统一抽象标准，但没有具体的实现
+serde = { version = "1.0.203", features = ["derive"] }
+# 专门处理 json 数据的实现
+serde_json = "1.0.120"
+
+# env 环境配置读取库
+dotenvy = "0.15.7"
+
+# 日志库，用于记录程序运行日志
+tracing = "0.1.37"
+# 日志输出到控制台的实现
+tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
+
+# 关于sqlx的配置，请参考 https://github.com/launchbadge/sqlx/tree/main/examples
+# 数据库操作库，相当与 JDBC
+# 事件驱动的非阻塞 I/O 平台，用于编写异步 I/O 支持的应用程序。
+sqlx = { version = "0.7.4", features = ["mysql", "runtime-tokio-rustls", "uuid"] }
+# 关于sea_orm的配置，请参考 https://www.sea-ql.org/SeaORM/docs/install-and-config/database-and-async-runtime
+# orm 数据库关系映射库，相当于 mybatis
+# debug print-将每个SQL语句打印到记录器        支持 chrono 类型        支持 rust_decimal 类型        支持 uuid 类型
+sea-orm = { version = "0.12.3", features = ["sqlx-mysql", "runtime-tokio-rustls", "macros", "debug-print", "uuid", "chrono", "rust_decimal"] }
+
+# redis 官方文档 https://crates.io/crates/redis
+# redis 数据库操作库
+redis = { version = "0.26.0", features = ["tokio-rustls-comp"] }
+tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
+
+
+[dev-dependencies]
+
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
