@@ -1,15 +1,20 @@
 {
+  "package": {
+    "productName": "tauri-bun-vite",
+    "version": "0.0.0"
+  },
+
   "build": {
     "beforeDevCommand": "bun run dev",
     "beforeBuildCommand": "bun run build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
-  "package": {
-    "productName": "tauri-bun-vite",
-    "version": "0.0.0"
-  },
+
   "tauri": {
+    "pattern": {
+      "use": "brownfield"
+    },
     "allowlist": {
       "all": false,
       "shell": {
@@ -17,27 +22,82 @@
         "open": true
       }
     },
-    "windows": [
-      {
-        "title": "tauri-bun-vite",
-        "width": 800,
-        "height": 600
-      }
-    ],
-    "security": {
-      "csp": null
-    },
     "bundle": {
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.dev",
+      "publisher": "龙茶清欢公司",
+      "copyright": "Copyright © 2022-2023 龙茶清欢(www.llf.com).All Rights Reserved",
+      "category": "Utility",
+      "shortDescription": "应用程序简短描述",
+      "longDescription": "龙茶清欢的拥有者整的好帅啊！",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "windows": {
+        "digestAlgorithm": null,
+        "certificateThumbprint": null,
+        "timestampUrl": null,
+        "tsp": false,
+        "allowDowngrades": true,
+        "webviewInstallMode": {
+          "silent": true,
+          "type": "downloadBootstrapper"
+        },
+        "wix": {
+          "license": "../LICENSE",
+          "language": "zh-CN"
+        },
+        "nsis": {
+          "license": "../LICENSE",
+          "headerImage": "icons/128x128.png",
+          "sidebarImage": "icons/128x128.png",
+          "installerIcon": "icons/128x128.png",
+          "installMode": "currentUser",
+          "displayLanguageSelector": true,
+          "languages": ["zh-CN", "zh-TW", "en-US"]
+        }
+      },
+      "macOS": {
+        "license": "../LICENSE",
+        "signingIdentity": "",
+        "providerShortName": "",
+        "minimumSystemVersion": "10.13"
+      },
+      "deb": {
+        "depends": [],
+        "files": {}
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "title": "tauri-bun-vite",
+        "width": 800,
+        "height": 600,
+        "minWidth": 800,
+        "minHeight": 600,
+        "center": true
+      }
+    ],
+    "systemTray": {
+      "iconPath": "icons/icon.ico",
+      "iconAsTemplate": false,
+      "menuOnLeftClick": true,
+      "title": "系统托盘标题"
     }
+  },
+
+  "plugins": {
+
   }
 }

@@ -1,0 +1,49 @@
+// 应用样式入口文件，导入外部样式文件
+// 以 main.scss 作为应用样式统一入口，导入外部样式
+@import "font.scss";
+@import "theme.scss";
+@import "reset.scss";
+@import "animate.scss";
+@import "layouts.scss";
+
+/* 定义全局CSS样式变量, 动态的，可以在运行时通过JavaScript修改 */
+:root {
+    --login-bg: url(@/assets/imgs/login-bg/苏檀.png);
+    --theme-background-color: #f0f2f5;
+    --bg-color: #0d1117;
+    --text-color: #f0f6fc;
+
+
+    /* 系统主题色 */
+    --theme-glass-light-bg-color: rgba(255, 255, 255, 0.2);
+    --theme-glass-dark-bg-color: rgba(90, 90, 90, 0.2);
+}
+
+/* flex 弹性布局 */
+.flex {
+    display: flex;
+}
+
+/* 元素内容垂直居中 */
+.flex-a {
+    display: flex;
+    align-items: center;
+}
+
+/* 元素内容水平居中 */
+.flex-j {
+    display: flex;
+    justify-content: center;
+}
+
+/* 元素内容水平、垂直居中 */
+.flex-aj {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+}

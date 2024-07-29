@@ -1,0 +1,70 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+/* 每一个 font-face 就是一个字体设置项 */
+@font-face {
+  font-family: "阿里妈妈东方大楷 Small";
+  font-weight: 300;
+  src: url('@/assets/fonts/alibaba/DongFangDaKai.woff2') format("woff2"),
+  url("@/assets/fonts/alibaba/DongFangDaKai.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "阿里妈妈东方大楷 Medium";
+  font-weight: 400;
+  src: url('@/assets/fonts/alibaba/DongFangDaKai.woff2') format("woff2"),
+  url("@/assets/fonts/alibaba/DongFangDaKai.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "阿里妈妈东方大楷 Large";
+  font-weight: 700;
+  src: url('@/assets/fonts/alibaba/DongFangDaKai.woff2') format("woff2"),
+  url("@/assets/fonts/alibaba/DongFangDaKai.woff") format("woff");
+  font-display: swap;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 Light";
+  font-weight: 300;
+  src: url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/ENCLvstvjf7D.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/9MPYnPj1TKcA.woff") format("woff");
+  font-display: swap;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 Regular";
+  font-weight: 400;
+  src: url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/4Ya4FfCgtxOJ.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/51Zs23A3RQJo.woff") format("woff");
+  font-display: swap;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 Medium";
+  font-weight: 500;
+  src: url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/UZS2jFJHNsN6.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/xrSDZ6tDH11J.woff") format("woff");
+  font-display: swap;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 SemiBold";
+  font-weight: 600;
+  src: url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/EomSxycZtq7P.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/wcWFoCtPPZs4.woff") format("woff");
+  font-display: swap;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "思源宋体 Bold";
+  font-weight: 700;
+  src: url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/OnmT3mQUwZr9.woff2") format("woff2"),
+    url("//at.alicdn.com/wf/webfont/kRrdopgQn4EU/uSSDiTFjSwpo.woff") format("woff");
+  font-display: swap;
+}

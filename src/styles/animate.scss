@@ -1,0 +1,369 @@
+// 项目的动画库入口
+
+:root {
+  --animate-duration: 1s;
+  --animate-delay: 1s;
+  --animate-repeat: 1;
+}
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+// 自定义动画
+// 毛玻璃登录页动画
+@keyframes glass-login-animate {
+  /* 起始、结束状态之后将向上位移 50px */
+  0%,
+  100% {
+    transform: translateY(-50px);
+  }
+  /* 中间状态之后将向下位移 50px */
+  50% {
+    transform: translateY(50px);
+  }
+}
+
+// 以下动画截取自 animate.css 依赖库
+// 直接从 animate.css 库中复制自己想要的动画
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+// 从
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  to {
+    opacity: 0;
+  }
+}
+.zoom-enter-active {
+  // animation: 1s zoomIn both;
+  animation-name: zoomIn;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+.zoom-leave-active {
+  // animation: 1s zoomOut both;
+  animation-name: zoomOut;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+// 从上方划入
+@keyframes backInDown {
+  0% {
+    transform: translateY(-1200px) scale(0.7);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.backInDown {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) backInDown both;
+}
+
+// 从下方划入
+@keyframes backInUp {
+  0% {
+    transform: translateY(1200px) scale(0.7);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.backInUp {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) backInUp both;
+}
+
+// 从左侧划入
+@keyframes backOutUp {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-700px) scale(0.7);
+    opacity: 0.7;
+  }
+}
+.backOutUp {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) backOutUp both;
+}
+
+// 从左侧划入
+@keyframes backInLeft {
+  0% {
+    transform: translateX(-2000px) scale(0.7);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateX(0px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.backInLeft {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) backInLeft both;
+}
+
+// 从右侧划入
+@keyframes backInRight {
+  0% {
+    transform: translateX(2000px) scale(0.7);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateX(0px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.backInRight {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) backInRight both;
+}
+
+// 从左侧划入
+@keyframes fadeInLeftBig {
+  from {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.fadeInLeftBig {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) fadeInLeftBig both;
+}
+
+// 从左侧划出
+@keyframes fadeOutLeftBig {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+}
+.fadeOutLeftBig {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) fadeOutLeftBig both;
+}
+
+// 从右侧划入
+@keyframes fadeInRightBig {
+  from {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.fadeInRightBig {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) fadeInRightBig both;
+}
+
+// 从右侧划出
+@keyframes fadeOutRightBig {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+.fadeOutRightBig {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) fadeOutRightBig both;
+}
+
+// 以下动画来自 transition.css
+// transition.css 从中间向四角展开
+@keyframes square-in-center {
+  from {
+    clip-path: inset(100% 100% 100% 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:square:center"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) square-in-center both;
+}
+
+@keyframes square-out-center {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(100% 100% 100% 100%);
+  }
+}
+[transition-style="out:square:center"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) square-out-center both;
+}
+// transition 路由过渡动画
+.square-in-center-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) square-in-center both;
+}
+//.square-in-center-leave-active {
+//  animation: 2.5s cubic-bezier(.25, 1, .30, 1) square-out-center both;
+//}
+
+@keyframes square-in-hesitate {
+  0% {
+    clip-path: inset(100% 100% 100% 100%);
+  }
+  40% {
+    clip-path: inset(33% 33% 33% 33%);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:square:hesitate"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) square-in-hesitate both;
+}
+.square-in-hesitate-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) square-in-hesitate both;
+}
+
+// transition.css 从左往右展开
+@keyframes wipe-in-right {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:wipe:right"] {
+  animation: 1s cubic-bezier(.25, 1, .30, 1) wipe-in-right both;
+}
+.wipe-in-right-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) wipe-in-right both;
+}
+
+@keyframes wipe-out-left {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+[transition-style="out:wipe:left"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-out-left both;
+}
+
+// 重写 el 折叠过渡动画
+//.collapse-transition-leave-active {
+//  animation: 1s cubic-bezier(.25, 1, .30, 1) wipe-out-left both;
+//}
+//.collapse-transition-enter-active {
+//  animation: 1s cubic-bezier(.25, 1, .30, 1) wipe-in-right both;
+//}
+
+// transition.css 从右往左展开
+@keyframes wipe-in-left {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:wipe:left"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-in-left both;
+}
+.wipe-in-left-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) wipe-in-left both;
+}
+
+// transition.css 从下往上展开
+@keyframes wipe-in-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:wipe:up"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-in-up both;
+}
+.wipe-in-up-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) wipe-in-up both;
+}
+
+// transition.css 从上往下展开
+@keyframes wipe-in-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:wipe:down"] {
+  animation: 2.5s cubic-bezier(.25, 1, .30, 1) wipe-in-down both;
+}
+.wipe-in-down-enter-active {
+  animation: 0.5s cubic-bezier(.25, 1, .30, 1) wipe-in-down both;
+}
+
+// transition.css 从中间往上下展开
+@keyframes wipe-cinematic-in {
+  0% {
+    clip-path: inset(100% 0 100% 0);
+  }
+  30%, 70% {
+    clip-path: inset(10% 0 10% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+[transition-style="in:wipe:cinematic"] {
+  animation-name: wipe-cinematic-in;
+}
+.wipe-cinematic-in-enter-active {
+  animation-name: wipe-cinematic-in;
+}
