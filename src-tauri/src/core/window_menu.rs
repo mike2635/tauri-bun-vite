@@ -1,16 +1,13 @@
-use tauri::{
-    utils::assets::EmbeddedAssets, Context, CustomMenuItem, Menu, Submenu, WindowMenuEvent,
-};
+use tauri::{utils::assets::EmbeddedAssets, Context, CustomMenuItem, Menu, Submenu, WindowMenuEvent, MenuItem};
 
 // 应用窗口菜单使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/menu
 
 // 初始化配置应用窗口菜单
-pub fn init_window_menu(context: &Context<EmbeddedAssets>) -> Menu {
-    let app_name = &context.package_info().name;
-    println!("the app_name is: {}", app_name);
-
+pub fn init_window_menu() -> Menu {
     // 创建应用窗口菜单,开启默认菜单并额外添加自定义菜单项
-    Menu::os_default(&app_name)
+    Menu::new()
+        .add_native_item(MenuItem::Copy)
+        .add_item(CustomMenuItem::new("hide", "Hide"))
         .add_submenu(handle_file_submenu())
         .add_submenu(handle_edit_submenu())
 }

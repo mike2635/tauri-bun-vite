@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import {invoke} from "@tauri-apps/api/core";
-import {platform, version, type, arch} from '@tauri-apps/plugin-os';
+import {invoke} from "@tauri-apps/api";
 
 const handleClick = () => {
 
@@ -26,18 +25,6 @@ const handleClick = () => {
   invoke('command_with_arg_and_return', {invokeMessage: 'Hello!'})
       .then(res => console.log(res));
 
-
-
-
-  // 获取系统信息
-  const currentPlatform = platform();
-  console.log("Current platform:", currentPlatform);
-  const osVersion = version();
-  console.log("OS version:", osVersion);
-  const osType = type();
-  console.log("OS type:", osType);
-  const archName = arch();
-  console.log("Architecture:", archName);
 
 }
 </script>
