@@ -25,10 +25,13 @@ async fn main() {
     let redis = init_redis().await;
     store_user_to_redis(redis).await;
 
+    // 构建并启动 Tauri
     tauri::Builder::default()
         .menu(init_window_menu())
         .system_tray(init_system_tray())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![
+            greet
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
