@@ -4,7 +4,8 @@
 use redis::{Client, Commands};
 use sea_orm::EntityTrait;
 use tauri::Manager;
-use tauri_bun_vite::{init_mysql, init_redis, init_system_tray, init_window_menu};
+use tracing::instrument::WithSubscriber;
+use tauri_bun_vite::{init_log, init_mysql, init_redis, init_system, init_system_tray, init_window_menu};
 use tauri_bun_vite::prelude::XxlJobUser;
 use tauri_bun_vite::xxl_job_user::Model;
 
@@ -40,16 +41,8 @@ async fn main() {
         // 定义 setup 挂钩, 用于初始化应用程序状态或者自定设置
         .setup(|app| {
             let handle = app.handle();
-            let handler = app.listen_global("ready", move |event| {
-                println!("app is ready");
-
-                // we no longer need to listen to the event
-                // we also could have used `app.once_global` instead
-                handle.unlisten(event.id());
-            });
-
-            // stop listening to the event when you do not need it anymore
-            app.unlisten(handler);
+            // 初始化系统
+            // init_system().await;
 
             let main_window = app.get_window("main").unwrap();
             // tauri::api::dialog::blocking::message(Some(&main_window), "Hello", "Welcome back!");
