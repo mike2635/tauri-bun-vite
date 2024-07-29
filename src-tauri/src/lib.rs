@@ -105,7 +105,7 @@ pub async fn init_mysql() -> DatabaseConnection {
 
 /// redis 官方网站： https://docs.rs/redis/0.26.0/redis/  此处为连接配置
 // redis 数据库连接示例
-async fn init_redis() -> Client {
+pub async fn init_redis() -> Client {
     // 连接 redis  注意这里的密码
     let client = redis::Client::open("redis://:479368@127.0.0.1:6379/").unwrap();
     // // 获取一个连接
