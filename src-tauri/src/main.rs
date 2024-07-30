@@ -101,8 +101,8 @@ fn main() {
     // });
 
 
-    // 监听更新事件，需要启用 tauri 依赖包的 updater 特性功能
-    // 需要生成密钥并在 tauri.conf.json 中配置 updater 部分
+    // 监听更新事件，需要启用 tauri 依赖包的 updater 特性功能  更新的静态 JSON 文件存放  https://gist.github.com/mike2635
+    // 需要生成密钥并在 tauri.conf.json 中配置 updater 部分   https://tauri.app/zh-cn/v1/guides/distribution/updater
     // 配置参考文档： https://docs.rs/tauri/1.7.1/tauri/struct.App.html
     // https://docs.rs/tauri/1.7.1/tauri/updater/index.html
     app.run(|_app_handle, event| match event {
