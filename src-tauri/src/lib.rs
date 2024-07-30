@@ -36,7 +36,7 @@ pub async fn init_system() -> Result<String, Error> {
 
 // 初始化日志
 pub async fn init_log() -> Result<String, Error> {
-    let log_file = std::fs::File::create("log.txt").unwrap();
+    // let log_file = std::fs::File::create("log.txt").unwrap();
 
     /// 推荐使用这一方式
     // 开始配置一个 `fmt` subscriber
@@ -45,7 +45,7 @@ pub async fn init_log() -> Result<String, Error> {
         .compact()
         // 显示源代码文件路径
         .with_file(true)
-        .with_writer(log_file)
+        // .with_writer(log_file)
         // 显示源代码行号
         .with_line_number(true)
         // 显示记录事件的线程 ID
