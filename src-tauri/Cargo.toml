@@ -25,7 +25,7 @@ dotenvy = "0.15.7"
 # 日志库，用于记录程序运行日志
 tracing = "0.1.37"
 # 日志输出到控制台的实现
-tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
+tracing-subscriber = { version = "0.3.17", features = ["env-filter", "chrono"] }
 
 # 关于sqlx的配置，请参考 https://github.com/launchbadge/sqlx/tree/main/examples
 # 数据库操作库，相当与 JDBC

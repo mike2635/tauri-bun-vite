@@ -1,24 +1,21 @@
-mod api;
-mod core;
-mod entity;
-
-pub use api::*;
-pub use core::*;
-pub use entity::*;
-
-
 use std::env;
 use std::io::Error;
 use std::time::Duration;
+
 use dotenvy::dotenv;
 use redis::Client;
 use sea_orm::{ConnectOptions, Database, DatabaseConnection};
 use serde::{Deserialize, Serialize};
 use tracing::{Level, log};
+use tracing_subscriber::fmt::time::ChronoLocal;
 
+pub use api::*;
+pub use core::*;
+pub use entity::*;
 
-
-
+mod api;
+mod core;
+mod entity;
 
 // 初始化系统环境
 pub async fn init_system() -> Result<String, Error> {
@@ -40,9 +37,14 @@ pub async fn init_log() -> Result<String, Error> {
 
     /// 推荐使用这一方式
     // 开始配置一个 `fmt` subscriber
+    // 配置参考： https://docs.rs/tracing-subscriber/0.3.18/tracing_subscriber/fmt/format/struct.Format.html
     let subscriber = tracing_subscriber::fmt()
-        // 使用更紧凑、更简短的日志格式
-        .compact()
+        // 日志格式，使用更紧凑、更简短的日志格式
+        // .compact()
+        // 日志格式，使用过于漂亮、人类可读的输出格式。
+        .pretty()
+        // 日志时间戳，参考 https://docs.rs/tracing-subscriber/0.3.18/tracing_subscriber/fmt/time/index.html
+        .with_timer(ChronoLocal::new("[%Y-%m-%d %H:%M:%S]".parse().unwrap()))
         // 显示源代码文件路径
         .with_file(false)
         // .with_writer(log_file)
