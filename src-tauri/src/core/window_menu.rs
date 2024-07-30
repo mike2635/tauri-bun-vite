@@ -1,6 +1,7 @@
 use tauri::{utils::assets::EmbeddedAssets, Context, CustomMenuItem, Menu, Submenu, WindowMenuEvent, MenuItem};
 
 // 应用窗口菜单使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/menu
+// 创建并挂在应用窗口菜单后，还必须编写相应的事件处理器，以响应菜单项的点击事件。否则，菜单项的点击事件将不会被触发。
 
 // 初始化配置应用窗口菜单
 pub fn init_window_menu() -> Menu {
@@ -43,6 +44,7 @@ fn handle_edit_submenu() -> Submenu {
 }
 
 // 应用自定义菜单项处理器，只有自定义的菜单项才需要自己编写相应的事件处理
+// 关于自定义菜单的事件监听处理，请参考官方文档: https://tauri.app/zh-cn/v1/guides/features/menu
 pub fn window_menu_event_handler(event: WindowMenuEvent) {
     // 获取所有应用窗口菜单时间WindowMenuEvent
     // let win = Some(event.window()).unwrap();
