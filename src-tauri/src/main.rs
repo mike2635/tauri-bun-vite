@@ -1,25 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::collections::HashMap;
 use redis::{Client, Commands};
-use tauri::Manager;
-
+use sea_orm::DatabaseConnection;
+use tauri::{Manager, State};
+use tokio::sync::Mutex;
 use tauri_bun_vite::{init_system, init_system_tray, init_window_menu, window_menu_event_handler};
 use tauri_bun_vite::xxl_job_user::Model;
-
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
-
-// 定义一个简单的状态结构体，用于管理应用共享状态
-#[derive(Default)]
-struct AppState {
-    count: i32,
-}
-
 
 /*
 Tauri 是一个框架，用于为所有主要的桌面平台构建微小、极快的二进制文件。
@@ -88,6 +76,8 @@ fn main() {
         // 应用系统托盘
         .system_tray(init_system_tray())
         // 管理共享状态，这通常用于在应用的不同部分之间共享数据
+        // 配置参考文档： https://docs.rs/tauri/1.7.1/tauri/all.html
+        // https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.manage
         .manage(AppState::default())
         // 应用指令注册。接受命令、函数的列表。创建一个处理程序，允许使用 invoke() 从 JS 调用命令。
         .invoke_handler(tauri::generate_handler![
@@ -141,6 +131,30 @@ fn main() {
 }
 
 
+// 定义一个简单的状态结构体，用于管理应用共享状态。共享状态需要考虑并发问题，参考： https://rustwiki.org/zh-CN/book/ch16-03-shared-state.html
+#[derive(Default)]
+struct AppState {
+    // 关于 Mutex 互斥锁的使用，参考： https://rustwiki.org/zh-CN/book/ch16-03-shared-state.html
+    db: Mutex<Option<DatabaseConnection>>,
+    store: Mutex<HashMap<u64, String>>,
+}
+
+// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+#[tauri::command]
+fn greet(name: &str) -> String {
+    format!("Hello, {}! You've been greeted from Rust!", name)
+}
+
+// 提取共享状态 AppState
+// 任何 tauri指令处理程序都可以通过 State Guard 检索托管状态。
+#[tauri::command]
+fn connect(app_state: State<AppState>) {
+    // initialize the connection, mutating the state with interior mutability
+    app_state.db.lock().unwrap() = Some(Connection {});
+    app_state.store.lock().unwrap().insert(2024, String::from("Hello, World!"));
+}
+
+
 
 // 处理函数，使用 AppState 中的 Redis 客户端
 async fn store_user_to_redis(client: Client) {
@@ -169,5 +183,6 @@ async fn store_user_to_redis(client: Client) {
 
     let json_user: String = conn.get("user").unwrap();
     let user: Model = serde_json::from_str(&json_user).unwrap();
-    println!("Redis get user: {:#?}", user); }
+    println!("Redis get user: {:#?}", user);
+}
 
