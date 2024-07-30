@@ -30,6 +30,7 @@ fn main() {
     // 构建并启动 Tauri
     // default() 方法用于创建默认的 Tauri 构建器，将 Wry 设为 Builder 的默认运行时
     // Wry 是 Rust 中的跨平台 WebView 渲染库，支持所有主要的桌面平台，如 Windows、macOS 和 Linux。
+    // app 是当前正在运行的应用程序的实例。此类型（ App ）实现（ Rust 中的实现类似于 Java 中的继承 ）了 Manager，它允许操作全局应用程序项。管理正在运行的应用程序。
     let app = tauri::Builder::default()
         // setup 方法允许你在应用启动之前执行一些初始化操作。这对于设置应用的状态、注册全局事件监听器、
         // 或者执行任何需要在应用启动前完成的任务非常有用。
@@ -39,6 +40,7 @@ fn main() {
             let handle = app.handle();
 
             // 异步初始化系统，包括日志、mysql、redis等
+            // Tauri 的 async_runtime 使用 tokio Runtime 初始化代码  https://docs.rs/tauri/1.7.1/tauri/async_runtime/index.html
             tauri::async_runtime::spawn(async move {
                 init_system().await.expect("TODO: panic message");
             });
@@ -77,7 +79,7 @@ fn main() {
         .system_tray(init_system_tray())
         // 管理共享状态，这通常用于在应用的不同部分之间共享数据
         // 配置参考文档： https://docs.rs/tauri/1.7.1/tauri/all.html
-        // https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.manage
+        // https://docs.rs/tauri/1.7.1/tauri/struct.Builder.html#method.manage
         .manage(AppState::default())
         // 应用指令注册。接受命令、函数的列表。创建一个处理程序，允许使用 invoke() 从 JS 调用命令。
         .invoke_handler(tauri::generate_handler![
@@ -88,9 +90,18 @@ fn main() {
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
+
+    // 获取所有被管理的窗口，并对它们进行一些操作，如管理窗口。
+    // 参看： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.windows
+    app.windows().iter().for_each(|window| {
+         // 管理窗口，如设置标题、大小、位置、关闭事件等。
+
+    });
+
+
     // 监听更新事件，需要启用 tauri 依赖包的 updater 特性功能
     // 需要生成密钥并在 tauri.conf.json 中配置 updater 部分
-    // 配置参考文档： https://tauri.app/zh-cn/v1/guides/distribution/updater
+    // 配置参考文档： https://docs.rs/tauri/1.7.1/tauri/struct.App.html
     // https://docs.rs/tauri/1.7.1/tauri/updater/index.html
     app.run(|_app_handle, event| match event {
         tauri::RunEvent::Updater(updater_event) => {
@@ -146,11 +157,11 @@ fn greet(name: &str) -> String {
 }
 
 // 提取共享状态 AppState
-// 任何 tauri指令处理程序都可以通过 State Guard 检索托管状态。
+// 任何 tauri指令处理程序都可以通过 State Guard 检索托管状态。参考： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.manage
 #[tauri::command]
 fn connect(app_state: State<AppState>) {
-    // initialize the connection, mutating the state with interior mutability
-    app_state.db.lock().unwrap() = Some(Connection {});
+    // 初始化连接，使用内部可变性改变状态
+    app_state.db.lock().unwrap() = Some(DatabaseConnection {});
     app_state.store.lock().unwrap().insert(2024, String::from("Hello, World!"));
 }
 
