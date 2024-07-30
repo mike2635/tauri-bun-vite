@@ -2,17 +2,22 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use redis::{Client, Commands};
-use sea_orm::EntityTrait;
 use tauri::Manager;
-use tracing::instrument::WithSubscriber;
-use tauri_bun_vite::{init_log, init_mysql, init_redis, init_system, init_system_tray, init_window_menu, window_menu_event_handler};
-use tauri_bun_vite::prelude::XxlJobUser;
+
+use tauri_bun_vite::{init_system, init_system_tray, init_window_menu, window_menu_event_handler};
 use tauri_bun_vite::xxl_job_user::Model;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
+}
+
+
+// 定义一个简单的状态结构体，用于管理应用共享状态
+#[derive(Default)]
+struct AppState {
+    count: i32,
 }
 
 
@@ -33,12 +38,16 @@ fn main() {
     // let redis = init_redis().await;
     // store_user_to_redis(redis).await;
 
+
     // 构建并启动 Tauri
     // default() 方法用于创建默认的 Tauri 构建器，将 Wry 设为 Builder 的默认运行时
     // Wry 是 Rust 中的跨平台 WebView 渲染库，支持所有主要的桌面平台，如 Windows、macOS 和 Linux。
     let app = tauri::Builder::default()
-        // 定义 setup 挂钩, 用于初始化应用程序状态或者自定设置
+        // setup 方法允许你在应用启动之前执行一些初始化操作。这对于设置应用的状态、注册全局事件监听器、
+        // 或者执行任何需要在应用启动前完成的任务非常有用。
         .setup(|app| {
+            // 在 `setup` 方法中，你可以访问 `AppHandle` 对象，这是一个包含了应用状态和方法的结构体。
+            // 你可以使用它来注册事件监听器、设置应用的环境变量、初始化数据库连接等。
             let handle = app.handle();
 
             // 异步初始化系统，包括日志、mysql、redis等
@@ -78,19 +87,21 @@ fn main() {
         })
         // 应用系统托盘
         .system_tray(init_system_tray())
+        // 管理共享状态，这通常用于在应用的不同部分之间共享数据
+        .manage(AppState::default())
         // 应用指令注册。接受命令、函数的列表。创建一个处理程序，允许使用 invoke() 从 JS 调用命令。
         .invoke_handler(tauri::generate_handler![
             greet
         ])
+        // 注意，此处采用 build 方法而不是默认的 run 方法，因为我们需要拿到 AppHandle 对象，并在下面的监听更新事件中使用它
         // 在编译时读取配置文件，并根据其内容生成 Context
-        .run(tauri::generate_context!())
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
-
-
 
     // 监听更新事件，需要启用 tauri 依赖包的 updater 特性功能
     // 需要生成密钥并在 tauri.conf.json 中配置 updater 部分
     // 配置参考文档： https://tauri.app/zh-cn/v1/guides/distribution/updater
+    // https://docs.rs/tauri/1.7.1/tauri/updater/index.html
     app.run(|_app_handle, event| match event {
         tauri::RunEvent::Updater(updater_event) => {
             match updater_event {
@@ -122,11 +133,11 @@ fn main() {
                 tauri::UpdaterEvent::Error(error) => {
                     println!("failed to update: {}", error);
                 }
-                _ => (),
             }
         }
         _ => {}
     });
+
 }
 
 
