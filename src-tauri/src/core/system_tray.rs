@@ -34,7 +34,7 @@ pub fn init_system_tray() -> SystemTray {
     // 配置参考 https://docs.rs/tauri/1.7.1/tauri/struct.SystemTray.html
     system_tray
         // 虚拟和无效的 Rgba 图标;有关详细信息，请参阅 Icon 文档
-        .with_icon(Icon::Rgba { rgba: Vec::new(), width: 0, height: 0 })
+        // .with_icon(Icon::Rgba { rgba: Vec::new(), width: 0, height: 0 })
         // 设置托盘图标工具提示
         .with_tooltip("My App")
         .with_menu(system_tray_menu)

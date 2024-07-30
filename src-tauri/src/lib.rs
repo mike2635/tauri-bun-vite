@@ -44,7 +44,7 @@ pub async fn init_log() -> Result<String, Error> {
         // 使用更紧凑、更简短的日志格式
         .compact()
         // 显示源代码文件路径
-        .with_file(true)
+        .with_file(false)
         // .with_writer(log_file)
         // 显示源代码行号
         .with_line_number(true)
@@ -88,8 +88,8 @@ pub async fn init_mysql() -> DatabaseConnection {
         .acquire_timeout(Duration::from_secs(8))
         .idle_timeout(Duration::from_secs(8))
         .max_lifetime(Duration::from_secs(8))
-        // 是否打印SQL执行日志
-        .sqlx_logging(true)
+        // 是否打印SQL执行日志，仅在开发环境下开启
+        .sqlx_logging(false)
         // 如果开启SQL日志、对应设置SQL日志级别
         .sqlx_logging_level(log::LevelFilter::Info)
         // 设置默认连接的数据库

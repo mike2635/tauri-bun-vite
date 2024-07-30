@@ -49,24 +49,24 @@ fn main() {
 
             // 异步检查更新，需要启用 tauri 依赖包的 updater 特性功能
             // 参考文档： https://docs.rs/tauri/1.7.1/tauri/updater/struct.UpdateBuilder.html
-            tauri::async_runtime::spawn(async move {
-                // 使用平台的目标三元组来检查更新，检查当前平台的更新
-                let builder = tauri::updater::builder(handle).target(tauri::utils::platform::target_triple().unwrap());
-                match builder.check().await {
-                    Ok(update) => {
-                        if update.is_update_available() {
-                            update.download_and_install().await.unwrap();
-                        }
-                    }
-                    Err(e) => {
-                        println!("failed to get update: {}", e);
-                    }
-                }
-            });
+            // tauri::async_runtime::spawn(async move {
+            //     // 使用平台的目标三元组来检查更新，检查当前平台的更新
+            //     let builder = tauri::updater::builder(handle).target(tauri::utils::platform::target_triple().unwrap());
+            //     match builder.check().await {
+            //         Ok(update) => {
+            //             if update.is_update_available() {
+            //                 update.download_and_install().await.unwrap();
+            //             }
+            //         }
+            //         Err(e) => {
+            //             println!("failed to get update: {}", e);
+            //         }
+            //     }
+            // });
 
             // 测试系统弹窗，需要启用 tauri 依赖包的 dialog 特性功能
-            let main_window = app.get_window("main").unwrap();
-            tauri::api::dialog::blocking::message(Some(&main_window), "Hello", "Welcome back!");
+            // let main_window = app.get_window("main").unwrap();
+            // tauri::api::dialog::blocking::message(Some(&main_window), "Hello", "Welcome back!");
 
             Ok(())
         })
@@ -96,9 +96,9 @@ fn main() {
 
     // 获取所有被管理的窗口，并对它们进行一些操作，如管理窗口。
     // 参看： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.windows
-    app.windows().iter().for_each(|window| {
-         // 管理窗口，如设置标题、大小、位置、关闭事件等。
-    });
+    // app.windows().iter().for_each(|window| {
+    //      // 管理窗口，如设置标题、大小、位置、关闭事件等。
+    // });
 
 
     // 监听更新事件，需要启用 tauri 依赖包的 updater 特性功能
