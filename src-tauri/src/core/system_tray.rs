@@ -1,6 +1,7 @@
-use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, SystemTraySubmenu};
+use tauri::{AppHandle, CustomMenuItem, Icon, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, SystemTraySubmenu};
 // 系统托盘使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/system-tray/
 
+// 参考 https://docs.rs/tauri/1.7.1/tauri/struct.SystemTray.html
 // 构建一个功能完整的应用系统托盘
 pub fn init_system_tray() -> SystemTray {
     // 创建一个空的应用系统托盘
@@ -28,11 +29,22 @@ pub fn init_system_tray() -> SystemTray {
         // 配置扩展托盘菜单项
         .add_submenu(submenu);
 
-    system_tray.with_menu(system_tray_menu)
+    // 将菜单设置为在右键单击系统托盘时显示。
+    // 配置参考 https://docs.rs/tauri/1.7.1/tauri/struct.SystemTray.html
+    system_tray
+        // 虚拟和无效的 Rgba 图标;有关详细信息，请参阅 Icon 文档
+        .with_icon(Icon::Rgba { rgba: Vec::new(), width: 0, height: 0 })
+        // 设置托盘图标工具提示
+        .with_tooltip("My App")
+        .with_menu(system_tray_menu)
+        .on_event(|event| {
+            // 处理系统托盘事件
+            system_tray_event_handler(event);
+        })
 }
 
 // 应用系统托盘事件处理器，每一个 CustomMenuItem 在点击时触发一个事件
-pub fn system_tray_event_handler(app: &AppHandle, event: SystemTrayEvent) {
+pub fn system_tray_event_handler(event: SystemTrayEvent) {
     // 监听匹配每一个应用系统托盘自定义事件
     match event {
         // 如果系统托盘被鼠标左点击
@@ -43,8 +55,6 @@ pub fn system_tray_event_handler(app: &AppHandle, event: SystemTrayEvent) {
         } => {
             // 鼠标左点击弹出应用窗口
             println!("system tray received a left click");
-            let window = app.get_window("main").unwrap();
-            window.show().unwrap();
         }
         // 如果系统托盘菜单项被鼠标点击
         SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
@@ -53,8 +63,10 @@ pub fn system_tray_event_handler(app: &AppHandle, event: SystemTrayEvent) {
                 std::process::exit(0);
             }
             "hide" => {
-                let window = app.get_window("main").unwrap();
-                window.hide().unwrap();
+                println!("system tray received a hide click");
+                // 隐藏应用窗口
+                let app = AppHandle::get_current();
+                app.hide().unwrap();
             }
             _ => {}
         },

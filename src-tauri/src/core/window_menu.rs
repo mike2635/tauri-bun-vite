@@ -3,12 +3,16 @@ use tauri::{utils::assets::EmbeddedAssets, Context, CustomMenuItem, Menu, Submen
 // 应用窗口菜单使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/menu
 // 创建并挂在应用窗口菜单后，还必须编写相应的事件处理器，以响应菜单项的点击事件。否则，菜单项的点击事件将不会被触发。
 
+// 配置参考: https://docs.rs/tauri/1.7.1/tauri/struct.Menu.html
 // 初始化配置应用窗口菜单
 pub fn init_window_menu() -> Menu {
-    // 创建应用窗口菜单,开启默认菜单并额外添加自定义菜单项
-    Menu::new()
+    // 创建一个包含默认菜单项和子菜单的菜单。基于操作系统自动选择默认菜单。
+    Menu::os_default("system_menu")
+        // 将原生菜单项添加到菜单中。
         .add_native_item(MenuItem::Copy)
+        // 将自定义菜单项添加到菜单中。
         .add_item(CustomMenuItem::new("hide", "Hide"))
+        // 添加带有子菜单的条目
         .add_submenu(handle_file_submenu())
         .add_submenu(handle_edit_submenu())
 }
@@ -33,6 +37,15 @@ fn handle_file_submenu() -> Submenu {
 
 // 帮助菜单项
 fn handle_edit_submenu() -> Submenu {
+    // 使用给定项创建一个新的窗口菜单。
+    Menu::with_items([
+        MenuItem::SelectAll.into(),
+        #[cfg(target_os = "macos")]
+        MenuItem::Redo.into(),
+        CustomMenuItem::new("toggle", "Toggle visibility").into(),
+        Submenu::new("View", Menu::new()).into(),
+    ]);
+
     // 这里Menu是整个菜单组件， Submenu是菜单项，CustomMenuItem和MenuItem是菜单项看中的具体功能项
     let about_app = CustomMenuItem::new("about_app".to_string(), "关于");
     let check_update = CustomMenuItem::new("check_update".to_string(), "检查更新");

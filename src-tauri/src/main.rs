@@ -2,10 +2,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::collections::HashMap;
+
 use redis::{Client, Commands};
 use sea_orm::DatabaseConnection;
 use tauri::{Manager, State};
 use tokio::sync::Mutex;
+
 use tauri_bun_vite::{init_system, init_system_tray, init_window_menu, window_menu_event_handler};
 use tauri_bun_vite::xxl_job_user::Model;
 
@@ -87,6 +89,7 @@ fn main() {
         ])
         // 注意，此处采用 build 方法而不是默认的 run 方法，因为我们需要拿到 AppHandle 对象，并在下面的监听更新事件中使用它
         // 在编译时读取配置文件，并根据其内容生成 Context
+        // 默认的配置文件路径是正在构建的 crate 的 Cargo 清单目录中的一个tauri.conf.json文件。 参考： https://docs.rs/tauri/1.7.1/tauri/macro.generate_context.html
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
@@ -95,7 +98,6 @@ fn main() {
     // 参看： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.windows
     app.windows().iter().for_each(|window| {
          // 管理窗口，如设置标题、大小、位置、关闭事件等。
-
     });
 
 
