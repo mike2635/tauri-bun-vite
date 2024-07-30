@@ -1,4 +1,5 @@
-use tauri::{AppHandle, CustomMenuItem, Icon, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, SystemTraySubmenu};
+use tauri::{CustomMenuItem, Icon, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, SystemTraySubmenu};
+
 // 系统托盘使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/system-tray/
 
 // 参考 https://docs.rs/tauri/1.7.1/tauri/struct.SystemTray.html
@@ -64,9 +65,6 @@ pub fn system_tray_event_handler(event: SystemTrayEvent) {
             }
             "hide" => {
                 println!("system tray received a hide click");
-                // 隐藏应用窗口
-                let app = AppHandle::get_current();
-                app.hide().unwrap();
             }
             _ => {}
         },

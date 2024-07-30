@@ -1,4 +1,4 @@
-use tauri::{utils::assets::EmbeddedAssets, Context, CustomMenuItem, Menu, Submenu, WindowMenuEvent, MenuItem};
+use tauri::{CustomMenuItem, Menu, MenuItem, Submenu, WindowMenuEvent};
 
 // 应用窗口菜单使用参考官方示例改造而来: https://tauri.app/zh-cn/v1/guides/features/menu
 // 创建并挂在应用窗口菜单后，还必须编写相应的事件处理器，以响应菜单项的点击事件。否则，菜单项的点击事件将不会被触发。

@@ -159,13 +159,13 @@ fn greet(name: &str) -> String {
 }
 
 // 提取共享状态 AppState
-// 任何 tauri指令处理程序都可以通过 State Guard 检索托管状态。参考： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.manage
-#[tauri::command]
-fn connect(app_state: State<AppState>) {
-    // 初始化连接，使用内部可变性改变状态
-    app_state.db.lock().unwrap() = Some(DatabaseConnection {});
-    app_state.store.lock().unwrap().insert(2024, String::from("Hello, World!"));
-}
+// // 任何 tauri指令处理程序都可以通过 State Guard 检索托管状态。参考： https://docs.rs/tauri/1.7.1/tauri/trait.Manager.html#method.manage
+// #[tauri::command]
+// async fn connect(app_state: State<AppState>) {
+//     // 初始化连接，使用内部可变性改变状态
+//     let _ = app_state.db.lock().await;
+//     app_state.store.lock().insert(2024, String::from("Hello, World!"));
+// }
 
 
 
