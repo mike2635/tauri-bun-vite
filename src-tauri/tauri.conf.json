@@ -79,6 +79,7 @@
     "updater": {
       "active": true,
       "endpoints": [
+        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}",
         "https://github.com/mike2635/blog-cloud/releases/download/v1.0.0/app-amd64.AppImage.tar.gz",
         "https://github.com/qier222/YesPlayMusic/releases/download/v0.4.8-2/yesplaymusic-0.4.8.tar.gz"
       ],
